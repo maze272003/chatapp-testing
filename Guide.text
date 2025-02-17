@@ -1,0 +1,16 @@
+backEnd server side:
+- cd backend
+- node server.js
+
+Server is running on port 5000
+Connected to MySQL database
+
+frontEnd side:
+- cd frontEnd
+- npm run dev or npm start
+
+dont forget to import the sql file xammp database.
+
+member:
+Jonatas
+Bayan
