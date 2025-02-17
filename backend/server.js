@@ -89,6 +89,25 @@ app.get("/all-tables", (req, res) => {
   });
 });
 
+// Route to insert survey data
+app.post("/addSurvey", (req, res) => {
+  console.log("Survey route hit"); // Debugging
+  const { name, feedback, rating } = req.body;
+
+  if (!name || !feedback || !rating) {
+    return res.status(400).json({ error: "Missing fields" });
+  }
+
+  const query = "INSERT INTO survey (name, feedback, rating) VALUES (?, ?, ?)";
+  db.query(query, [name, feedback, rating], (err, result) => {
+    if (err) {
+      console.error("Database Insert Error:", err);
+      return res.status(500).json({ error: "Database error" });
+    }
+    res.json({ success: true, id: result.insertId });
+  });
+});
+
 // Start server
 app.listen(5000, () => {
   console.log("Server is running on port 5000");
