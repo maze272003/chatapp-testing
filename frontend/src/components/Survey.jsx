@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import Swal from "sweetalert2"; // Import SweetAlert2
 
 function Survey() {
   const [name, setName] = useState("");
@@ -14,23 +15,40 @@ function Survey() {
         feedback,
         rating,
       });
+
       console.log("Response:", response.data); // Debugging
 
-      alert(`Salamat, ${name}, sa iyong feedback: "${feedback}" at rating: ${rating}`);
+      // Show SweetAlert2 Success Message
+      Swal.fire({
+        title: "Salamat!",
+        text: `Salamat, ${name}, sa iyong feedback: "${feedback}" at rating: ${rating}`,
+        icon: "success",
+        confirmButtonText: "OK",
+      });
+
+      // Reset form fields
       setName("");
       setFeedback("");
       setRating(0);
     } catch (error) {
       console.error("Error submitting survey:", error);
-      alert("May error sa pagpapadala ng iyong feedback.");
+
+      // Show SweetAlert2 Error Message
+      Swal.fire({
+        title: "Error!",
+        text: "May error sa pagpapadala ng iyong feedback.",
+        icon: "error",
+        confirmButtonText: "OK",
+      });
     }
   };
 
   return (
     <div className="container mt-5">
       <div className="card shadow-lg p-4">
-        <h2 className="text-center text-primary mb-4">Form ng Survey</h2>
+        <h2 className="text-center text-primary mb-4">Form Survey</h2>
         <form onSubmit={handleSubmit}>
+          {/* Pangalan Input */}
           <div className="mb-3">
             <label className="form-label">Pangalan:</label>
             <input
@@ -43,6 +61,7 @@ function Survey() {
             />
           </div>
 
+          {/* Feedback Input */}
           <div className="mb-3">
             <label className="form-label">Feedback:</label>
             <textarea
@@ -55,6 +74,7 @@ function Survey() {
             />
           </div>
 
+          {/* Rating Buttons */}
           <div className="mb-3">
             <label className="form-label">Rating:</label>
             <div className="d-flex gap-2">
@@ -71,6 +91,7 @@ function Survey() {
             </div>
           </div>
 
+          {/* Submit Button */}
           <button type="submit" className="btn btn-primary w-100">
             Ipadala
           </button>
